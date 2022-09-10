@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 
 import '../screens/product_detail_screen.dart';
 import '../providers/product.dart';
+import '../providers/cart.dart';
 
 class ProductItem extends StatelessWidget {
   //final String id;
@@ -19,9 +20,8 @@ class ProductItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final product = Provider.of<Product>(
-      context,
-    );
+    final product = Provider.of<Product>(context, listen: false);
+    final cart = Provider.of<Cart>(context, listen: false);
     return ClipRRect(
       borderRadius: BorderRadius.circular(8),
       child: GridTile(
@@ -37,34 +37,42 @@ class ProductItem extends StatelessWidget {
             fit: BoxFit.cover,
           ),
         ),
-        //header: GridTileBar(
-        //leading: CircleAvatar(
-        //backgroundColor: Theme.of(context).colorScheme.secondary,
-        //child: Text(
-        // '\$' '$price',
-        // style: TextStyle(
-        //   fontSize: 10,
-        //   color: Colors.black,
-        // ),
-        // ),
-        //),
-        //),
+        header: GridTileBar(
+          leading: CircleAvatar(
+            radius: 22,
+            backgroundColor: Theme.of(context).colorScheme.secondary,
+            child: Text(
+              '\$${product.price}',
+              style: TextStyle(
+                  fontSize: 12,
+                  color: Colors.white,
+                  fontWeight: FontWeight.bold),
+            ),
+          ),
+        ),
         footer: GridTileBar(
           backgroundColor: Colors.black87,
-          leading: IconButton(
-              icon: Icon(
-                product.isFavorite ? Icons.favorite : Icons.favorite_border,
-              ),
-              onPressed: () {
-                product.toggleFavoriteStatus();
-              },
-              color: Theme.of(context).colorScheme.secondary),
-          title: Text(
-            product.title,
-            textAlign: TextAlign.center,
+          leading: Consumer<Product>(
+            builder: (context, product, _) => IconButton(
+                icon: Icon(
+                  product.isFavorite ? Icons.favorite : Icons.favorite_border,
+                ),
+                onPressed: () {
+                  product.toggleFavoriteStatus();
+                },
+                color: Colors.amber),
           ),
+          title: Text(product.title,
+              textAlign: TextAlign.center,
+              style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold)),
           trailing: IconButton(
-              onPressed: (() {}),
+              onPressed: (() {
+                cart.addItems(
+                  product.id,
+                  product.price,
+                  product.title,
+                );
+              }),
               icon: Icon(
                 Icons.shopping_cart,
               ),
