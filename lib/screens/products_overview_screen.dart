@@ -49,7 +49,7 @@ class _ProductsOverviewScreenState extends State<ProductsOverviewScreen> {
                     PopupMenuItem(
                         child: Text(
                           'Only Favorites',
-                          style: TextStyle(color: Colors.amber),
+                          style: TextStyle(color: Colors.white),
                         ),
                         value: FilterOptions.Favorites),
                     PopupMenuItem(

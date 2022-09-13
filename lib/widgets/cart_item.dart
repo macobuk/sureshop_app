@@ -28,6 +28,49 @@ class CartItem extends StatelessWidget {
         padding: EdgeInsets.only(right: 20),
       ),
       direction: DismissDirection.endToStart,
+      confirmDismiss: (direction) {
+        return showDialog(
+            context: context,
+            builder: (context) => AlertDialog(
+                  backgroundColor: Colors.blueGrey,
+                  title: Text(
+                    'Delete Item',
+                    style: TextStyle(color: Colors.amber),
+                  ),
+                  content: Text(
+                    'Do you want to remove the item completely from the cart?',
+                    style: TextStyle(color: Colors.amber),
+                  ),
+                  actions: <Widget>[
+                    ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                          backgroundColor: Colors.green),
+                      child: Text(
+                        'No',
+                        style: TextStyle(
+                          color: Colors.white,
+                        ),
+                      ),
+                      onPressed: () {
+                        Navigator.of(context).pop(false);
+                      },
+                    ),
+                    ElevatedButton(
+                      style:
+                          ElevatedButton.styleFrom(backgroundColor: Colors.red),
+                      child: Text(
+                        'Yes',
+                        style: TextStyle(
+                          color: Colors.white,
+                        ),
+                      ),
+                      onPressed: () {
+                        Navigator.of(context).pop(true);
+                      },
+                    )
+                  ],
+                ));
+      },
       onDismissed: ((direction) {
         Provider.of<Cart>(context, listen: false).removeItem(productId);
       }),
@@ -39,15 +82,58 @@ class CartItem extends StatelessWidget {
         child: Padding(
           padding: EdgeInsets.all(8),
           child: ListTile(
-            leading: CircleAvatar(
-              backgroundColor: Theme.of(context).colorScheme.primary,
-              child: Padding(
-                padding: EdgeInsets.all(10),
-                child: FittedBox(
-                    child: Text('$quantity x',
-                        style: TextStyle(color: Colors.black))),
+            leading: GestureDetector(
+              child: CircleAvatar(
+                backgroundColor: Theme.of(context).colorScheme.primary,
+                child: Padding(
+                  padding: EdgeInsets.all(10),
+                  child: FittedBox(
+                      child: Text('$quantity x',
+                          style: TextStyle(color: Colors.black))),
+                ),
+                radius: 25,
               ),
-              radius: 25,
+              onTap: () {
+                return showDialog(
+                    context: context,
+                    builder: (context) => AlertDialog(
+                          backgroundColor: Colors.blueGrey,
+                          title: Text(
+                            'Change Quantity',
+                            style: TextStyle(color: Colors.amber),
+                          ),
+                          content: Text(
+                            'Here you can change the quantity',
+                            style: TextStyle(color: Colors.amber),
+                          ),
+                          actions: <Widget>[
+                            ElevatedButton(
+                              style: ElevatedButton.styleFrom(
+                                  backgroundColor: Colors.green),
+                              child: Text(
+                                'No',
+                                style: TextStyle(
+                                  color: Colors.white,
+                                ),
+                              ),
+                              onPressed: () {},
+                            ),
+                            ElevatedButton(
+                              style: ElevatedButton.styleFrom(
+                                  backgroundColor: Colors.red),
+                              child: Text(
+                                'Yes',
+                                style: TextStyle(
+                                  color: Colors.white,
+                                ),
+                              ),
+                              onPressed: () {
+                                Navigator.of(context).pop(true);
+                              },
+                            )
+                          ],
+                        ));
+              },
             ),
             title: Text(title),
             subtitle: Text('Total: \$${(price * quantity).toDouble()}'),

@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import '../screens/orders_screen.dart';
+import '../screens/user_products_screen.dart';
 
 import '../screens/cart_screen.dart';
 
@@ -10,8 +12,8 @@ class DrawerItem extends StatelessWidget {
       backgroundColor: Theme.of(context).colorScheme.primary,
       child: Card(
         color: Theme.of(context).canvasColor,
-        child: ListView(
-          padding: EdgeInsets.all(10),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
           children: [
             ListTile(
               leading: Icon(
@@ -27,7 +29,7 @@ class DrawerItem extends StatelessWidget {
                 ),
               ),
               onTap: () {
-                Navigator.pop(context);
+                Navigator.of(context).pushReplacementNamed('/');
               },
             ),
             Divider(
@@ -48,26 +50,10 @@ class DrawerItem extends StatelessWidget {
                   fontFamily: 'Anton',
                 ),
               ),
-              onTap: () {},
-            ),
-            Divider(
-                thickness: 10,
-                height: 5,
-                color: Theme.of(context).colorScheme.primary),
-            ListTile(
-              leading: Icon(
-                Icons.favorite,
-                color: Colors.white,
-              ),
-              title: const Text(
-                'Favorites',
-                style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 20,
-                  fontFamily: 'Anton',
-                ),
-              ),
-              onTap: () {},
+              onTap: () {
+                Navigator.of(context)
+                    .pushReplacementNamed(OrdersScreen.routeName);
+              },
             ),
             Divider(
                 thickness: 10,
@@ -87,15 +73,30 @@ class DrawerItem extends StatelessWidget {
                 ),
               ),
               onTap: () {
-                Navigator.of(context).pushNamed(CartScreen.routeName);
+                Navigator.of(context)
+                    .pushReplacementNamed(CartScreen.routeName);
               },
             ),
             Divider(
                 thickness: 10,
                 height: 5,
                 color: Theme.of(context).colorScheme.primary),
-            SizedBox(
-              height: 425,
+            ListTile(
+              leading: Icon(
+                Icons.add,
+                color: Colors.white,
+              ),
+              title: const Text(
+                'Manage Your Products',
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 20,
+                  fontFamily: 'Anton',
+                ),
+              ),
+              onTap: () {
+                Navigator.of(context).pushNamed(UserProductsScreen.routeName);
+              },
             ),
             Divider(
                 thickness: 10,
@@ -115,6 +116,11 @@ class DrawerItem extends StatelessWidget {
                 ),
               ),
               onTap: () {},
+            ),
+            Divider(
+              thickness: 10,
+              height: 5,
+              color: Theme.of(context).colorScheme.primary,
             ),
           ],
         ),
