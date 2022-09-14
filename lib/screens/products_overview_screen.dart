@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'package:provider/provider.dart';
 import '../providers/cart.dart';
+import '../providers/products.dart';
 
 import '../widgets/products_grid.dart';
 import '../widgets/badge.dart';
@@ -21,6 +22,36 @@ class ProductsOverviewScreen extends StatefulWidget {
 
 class _ProductsOverviewScreenState extends State<ProductsOverviewScreen> {
   var _showOnlyFavorites = false;
+  var _isInIt = true;
+  var _isLoading = false;
+
+  @override
+  void initState() {
+    //Provider.of<Products>(context, listen: false).fetchAndSetProducts(); * use this syntax or the following
+    //Future.delayed(Duration.zero).then((_) { * use this syntax or add _isInIt in dependencies
+    // Provider.of<Products>(
+    //  context,
+    // ).fetchAndSetProducts();
+    // });
+    super.initState();
+  }
+
+  @override
+  void didChangeDependencies() {
+    if (_isInIt) {
+      _isLoading = true;
+      setState(() {});
+      Provider.of<Products>(
+        context,
+      ).fetchAndSetProducts().then((_) {
+        setState(() {
+          _isLoading = false;
+        });
+      });
+    }
+    _isInIt = false;
+    super.didChangeDependencies();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -77,7 +108,13 @@ class _ProductsOverviewScreenState extends State<ProductsOverviewScreen> {
           ),
         ],
       ),
-      body: ProductsGrid(_showOnlyFavorites),
+      body: _isLoading
+          ? Center(
+              child: CircularProgressIndicator(
+                color: Colors.amber,
+              ),
+            )
+          : ProductsGrid(_showOnlyFavorites),
     );
   }
 }
