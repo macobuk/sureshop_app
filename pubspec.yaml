@@ -22,8 +22,10 @@ environment:
 
 dependencies:
   cupertino_icons: ^1.0.2
+  firebase_auth: ^3.8.0
   flutter:
     sdk: flutter
+  flutter_state_notifier: ^0.7.1
   http: ^0.13.5
   intl: ^0.17.0
   provider: ^6.0.3
