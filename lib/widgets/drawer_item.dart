@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import '../providers/auth.dart';
 import '../screens/orders_screen.dart';
 import '../screens/user_products_screen.dart';
 
@@ -104,18 +106,22 @@ class DrawerItem extends StatelessWidget {
                 color: Theme.of(context).colorScheme.primary),
             ListTile(
               leading: Icon(
-                Icons.settings,
+                Icons.exit_to_app,
                 color: Colors.white,
               ),
               title: const Text(
-                'Settings',
+                'Log Out',
                 style: TextStyle(
                   color: Colors.white,
                   fontSize: 20,
                   fontFamily: 'Anton',
                 ),
               ),
-              onTap: () {},
+              onTap: () {
+                Navigator.of(context).pop();
+                Navigator.pushReplacementNamed(context, '/');
+                Provider.of<Auth>(context, listen: false).logout();
+              },
             ),
             Divider(
               thickness: 10,
