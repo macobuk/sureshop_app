@@ -6,6 +6,8 @@ import '../screens/user_products_screen.dart';
 
 import '../screens/cart_screen.dart';
 
+import '../helpers/custom_route.dart';
+
 class DrawerItem extends StatelessWidget {
   const DrawerItem();
   @override
@@ -53,8 +55,11 @@ class DrawerItem extends StatelessWidget {
                 ),
               ),
               onTap: () {
-                Navigator.of(context)
-                    .pushReplacementNamed(OrdersScreen.routeName);
+                Navigator.of(context).pushReplacement(
+                  CustomRoute(
+                    builder: (context) => OrdersScreen(),
+                  ),
+                );
               },
             ),
             Divider(

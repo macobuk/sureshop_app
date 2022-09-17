@@ -14,6 +14,7 @@ import './screens/user_products_screen.dart';
 import './screens/edit_product_screen.dart';
 import './screens/auth_screen.dart';
 import './screens/splash_screen.dart';
+import './helpers/custom_route.dart';
 
 void main() => runApp(MyApp());
 
@@ -50,14 +51,17 @@ class MyApp extends StatelessWidget {
             debugShowCheckedModeBanner: false,
             title: 'SureShop',
             theme: ThemeData(
-              canvasColor: Colors.blueGrey,
-              colorScheme: ColorScheme.fromSwatch(
-                primarySwatch: Colors.amber,
-              ).copyWith(
-                  secondary: Color.fromARGB(255, 4, 188, 28),
-                  shadow: Colors.white),
-              fontFamily: 'Lato',
-            ),
+                canvasColor: Colors.blueGrey,
+                colorScheme: ColorScheme.fromSwatch(
+                  primarySwatch: Colors.amber,
+                ).copyWith(
+                    secondary: Color.fromARGB(255, 4, 188, 28),
+                    shadow: Colors.white),
+                fontFamily: 'Lato',
+                pageTransitionsTheme: PageTransitionsTheme(builders: {
+                  TargetPlatform.android: CustomPageTransitionBuilder(),
+                  TargetPlatform.iOS: CustomPageTransitionBuilder(),
+                })),
             home: auth.isAuth
                 ? ProductsOverviewScreen()
                 : FutureBuilder(
