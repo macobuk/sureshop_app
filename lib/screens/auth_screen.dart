@@ -63,7 +63,7 @@ class AuthScreen extends StatelessWidget {
                         'SureShop',
                         style: TextStyle(
                           color: Colors.white,
-                          fontSize: 50,
+                          fontSize: 42,
                           fontFamily: 'Anton',
                           fontWeight: FontWeight.normal,
                         ),
