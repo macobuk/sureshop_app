@@ -49,7 +49,7 @@ class ProductItem extends StatelessWidget {
             radius: 22,
             backgroundColor: Theme.of(context).colorScheme.secondary,
             child: Text(
-              '\$${product.price}',
+              '\$${product.price.toStringAsFixed(2)}',
               style: TextStyle(
                   fontSize: 12,
                   color: Colors.white,
